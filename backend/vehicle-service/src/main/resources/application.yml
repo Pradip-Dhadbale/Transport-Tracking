@@ -12,8 +12,8 @@ spring:
     name: vehicle-service
   datasource:
     url: ${VEHICLE_DB_URL:jdbc:mysql://localhost:3306/vehicle_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC}
-    username: ${VEHICLE_DB_USERNAME}
-    password: ${VEHICLE_DB_PASSWORD}
+    username: ${VEHICLE_DB_USERNAME:root}
+    password: ${VEHICLE_DB_PASSWORD:Root@1234}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -44,10 +44,10 @@ eureka:
     prefer-ip-address: ${EUREKA_PREFER_IP_ADDRESS:false}
 
 gateway:
-  secret-key: ${GATEWAY_SHARED_SECRET}
+  secret-key: ${GATEWAY_SHARED_SECRET:local-dev-gateway-secret-transport-2026-keep-private}
 
 analytics:
-  internal-secret: ${ANALYTICS_INTERNAL_SECRET}
+  internal-secret: ${ANALYTICS_INTERNAL_SECRET:local-dev-analytics-secret-transport-2026-keep-private}
 
 management:
   endpoints:

@@ -20,7 +20,7 @@ management:
 
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:local-dev-jwt-secret-transport-2026-change-before-sharing}
 
 
 spring:
@@ -47,7 +47,7 @@ spring:
             add-to-simple-url-handler-mapping: true
             cors-configurations:
               '[/**]':
-                allowedOriginPatterns: ${CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://localhost:5174,http://127.0.0.1:5174}
+                allowedOriginPatterns: ${CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174}
                 allowedMethods:
                   - GET
                   - POST
@@ -67,7 +67,6 @@ spring:
                 maxAge: 3600
 
           routes:
-
             - id: auth-service
               uri: lb://AUTH-SERVICE
               predicates:
@@ -134,4 +133,4 @@ logging:
 
 
 gateway:
-  secret-key: ${GATEWAY_SHARED_SECRET}
+  secret-key: ${GATEWAY_SHARED_SECRET:local-dev-gateway-secret-transport-2026-keep-private}

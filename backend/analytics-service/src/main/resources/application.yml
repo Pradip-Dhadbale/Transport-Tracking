@@ -15,8 +15,8 @@ spring:
       - org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration
   datasource:
     url: ${ANALYTICS_DB_URL:jdbc:mysql://localhost:3306/analytics_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
-    username: ${ANALYTICS_DB_USERNAME}
-    password: ${ANALYTICS_DB_PASSWORD}
+    username: ${ANALYTICS_DB_USERNAME:root}
+    password: ${ANALYTICS_DB_PASSWORD:Root@1234}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -50,10 +50,10 @@ eureka:
     prefer-ip-address: ${EUREKA_PREFER_IP_ADDRESS:false}
 
 gateway:
-  secret-key: ${GATEWAY_SHARED_SECRET}
+  secret-key: ${GATEWAY_SHARED_SECRET:local-dev-gateway-secret-transport-2026-keep-private}
 
 analytics:
-  internal-secret: ${ANALYTICS_INTERNAL_SECRET}
+  internal-secret: ${ANALYTICS_INTERNAL_SECRET:local-dev-analytics-secret-transport-2026-keep-private}
   on-time-grace-minutes: ${ANALYTICS_ON_TIME_GRACE_MINUTES:15}
 
 resilience4j:

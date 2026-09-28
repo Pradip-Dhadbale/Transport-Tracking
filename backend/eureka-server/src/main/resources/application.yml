@@ -18,7 +18,7 @@ eureka:
     hostname: ${EUREKA_HOSTNAME:localhost}
 
   client:
-  # Eureka server cannot register itself as client
+    # Eureka server cannot register itself as client
     register-with-eureka: false
     fetch-registry: false
     service-url:

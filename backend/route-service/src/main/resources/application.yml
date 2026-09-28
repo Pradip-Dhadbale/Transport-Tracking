@@ -13,8 +13,8 @@ spring:
 
   datasource:
     url: ${ROUTE_DB_URL:jdbc:mysql://localhost:3306/route_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC}
-    username: ${ROUTE_DB_USERNAME}
-    password: ${ROUTE_DB_PASSWORD}
+    username: ${ROUTE_DB_USERNAME:root}
+    password: ${ROUTE_DB_PASSWORD:Root@1234}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -38,7 +38,7 @@ eureka:
     prefer-ip-address: ${EUREKA_PREFER_IP_ADDRESS:false}
 
 gateway:
-  secret-key: ${GATEWAY_SHARED_SECRET}
+  secret-key: ${GATEWAY_SHARED_SECRET:local-dev-gateway-secret-transport-2026-keep-private}
 
 management:
   endpoints:

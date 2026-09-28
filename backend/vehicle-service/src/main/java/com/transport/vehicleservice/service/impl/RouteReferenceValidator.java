@@ -26,6 +26,7 @@ public class RouteReferenceValidator {
         try {
             ApiResponseDto<RouteReferenceDto> routeResponse =
                     routeServiceClient.getRoute(routeId);
+
             RouteReferenceDto route = requireData(routeResponse, "route");
             if (!route.isActive() || !routeId.equals(route.getRouteId())) {
                 throw new RouteReferenceException("Route is not active");

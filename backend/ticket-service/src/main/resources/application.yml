@@ -3,13 +3,13 @@ server:
   address: ${SERVICE_BIND_ADDRESS:127.0.0.1}
 
 gateway:
-  secret-key: ${GATEWAY_SHARED_SECRET}
+  secret-key: ${GATEWAY_SHARED_SECRET:local-dev-gateway-secret-transport-2026-keep-private}
 
 payment:
-  internal-secret: ${PAYMENT_INTERNAL_SECRET}
+  internal-secret: ${PAYMENT_INTERNAL_SECRET:local-dev-payment-secret-transport-2026-keep-private}
 
 analytics:
-  internal-secret: ${ANALYTICS_INTERNAL_SECRET}
+  internal-secret: ${ANALYTICS_INTERNAL_SECRET:local-dev-analytics-secret-transport-2026-keep-private}
 
 spring:
   config:
@@ -21,8 +21,8 @@ spring:
     name: ticket-service
   datasource:
     url: ${TICKET_DB_URL:jdbc:mysql://localhost:3306/ticket_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC}
-    username: ${TICKET_DB_USERNAME}
-    password: ${TICKET_DB_PASSWORD}
+    username: ${TICKET_DB_USERNAME:root}
+    password: ${TICKET_DB_PASSWORD:Root@1234}
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:validate}

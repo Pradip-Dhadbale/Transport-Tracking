@@ -8,8 +8,7 @@ import com.transport.vehicleservice.entity.VehicleAssignment;
 import com.transport.vehicleservice.entity.VehicleLocation;
 
 public final class VehicleMapper {
-    private VehicleMapper() {
-    }
+    private VehicleMapper() {}
 
     public static VehicleResponseDto toVehicleDto(Vehicle vehicle) {
         return VehicleResponseDto.builder()

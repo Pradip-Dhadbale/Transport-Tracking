@@ -5,42 +5,42 @@ server:
 
 #spring app config
 spring:
-   config:
-     import:
-       - "optional:file:.env[.properties]"
-       - "optional:file:../.env[.properties]"
+  config:
+    import:
+      - "optional:file:.env[.properties]"
+      - "optional:file:../.env[.properties]"
 
-   application:
-     name: auth-service
+  application:
+    name: auth-service
 
-   datasource:
-     url: ${AUTH_DB_URL:jdbc:mysql://localhost:3306/transport_auth_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
-     username: ${AUTH_DB_USERNAME}
-     password: ${AUTH_DB_PASSWORD}
-     driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: ${AUTH_DB_URL:jdbc:mysql://localhost:3306/transport_auth_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${AUTH_DB_USERNAME:root}
+    password: ${AUTH_DB_PASSWORD:Root@1234}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-   jpa:
-     hibernate:
-       ddl-auto: ${JPA_DDL_AUTO:validate}
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:validate}
 
-     show-sql: ${JPA_SHOW_SQL:false}
+    show-sql: ${JPA_SHOW_SQL:false}
 
-     properties:
-       hibernate:
-         format_sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
-     database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
-   flyway:
-     enabled: ${FLYWAY_ENABLED:true}
-     baseline-on-migrate: true
-     baseline-version: 0
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    baseline-on-migrate: true
+    baseline-version: 0
 
 
 
 # Jwt config
 jwt:
-  secret: ${JWT_SECRET:mySuperSecretKey123456789}
+  secret: ${JWT_SECRET:local-dev-jwt-secret-transport-2026-change-before-sharing}
   access-token-expiry: ${JWT_ACCESS_TOKEN_EXPIRY_MS:900000}
   refresh-token-expiry: ${JWT_REFRESH_TOKEN_EXPIRY_MS:604800000}
 
@@ -56,7 +56,7 @@ otp:
 eureka:
   client:
     service-url:
-     defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
   instance:
     hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
     prefer-ip-address: ${EUREKA_PREFER_IP_ADDRESS:false}

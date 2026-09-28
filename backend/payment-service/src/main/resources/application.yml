@@ -12,8 +12,8 @@ spring:
     name: payment-service
   datasource:
     url: ${PAYMENT_DB_URL:jdbc:mysql://localhost:3306/payment_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
-    username: ${PAYMENT_DB_USERNAME}
-    password: ${PAYMENT_DB_PASSWORD}
+    username: ${PAYMENT_DB_USERNAME:root}
+    password: ${PAYMENT_DB_PASSWORD:Root@1234}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -46,15 +46,15 @@ eureka:
     prefer-ip-address: ${EUREKA_PREFER_IP_ADDRESS:false}
 
 gateway:
-  secret-key: ${GATEWAY_SHARED_SECRET}
+  secret-key: ${GATEWAY_SHARED_SECRET:local-dev-gateway-secret-transport-2026-keep-private}
 
 payment:
-  internal-secret: ${PAYMENT_INTERNAL_SECRET}
+  internal-secret: ${PAYMENT_INTERNAL_SECRET:local-dev-payment-secret-transport-2026-keep-private}
   simulator:
     outcome: ${PAYMENT_SIMULATOR_OUTCOME:SUCCESS}
 
 analytics:
-  internal-secret: ${ANALYTICS_INTERNAL_SECRET}
+  internal-secret: ${ANALYTICS_INTERNAL_SECRET:local-dev-analytics-secret-transport-2026-keep-private}
 
 resilience4j:
   circuitbreaker:

@@ -2,28 +2,73 @@
 
 #Application constants
 server:
-  port: 9090
+  port: ${API_GATEWAY_PORT:9090}
+  address: ${API_GATEWAY_BIND_ADDRESS:127.0.0.1}
+  error:
+    include-stacktrace: never
+    include-message: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+  endpoint:
+    health:
+      show-details: never
+
 
 jwt:
-  secret: mySuperSecretKeyForJwtGeneration12345678901234567890
+  secret: ${JWT_SECRET:local-dev-jwt-secret-transport-2026-change-before-sharing}
 
 
 spring:
+  config:
+    import:
+      - "optional:file:.env[.properties]"
+      - "optional:file:../.env[.properties]"
+
   application:
     name: api-gateway
 
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
+
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: false
-
       server:
         webflux:
-          routes:
+          discovery:
+            locator:
+              enabled: false
+          globalcors:
+            add-to-simple-url-handler-mapping: true
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns: ${CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174}
+                allowedMethods:
+                  - GET
+                  - POST
+                  - DELETE
+                  - PUT
+                  - OPTIONS
+                  - PATCH
+                allowedHeaders:
+                  - Authorization
+                  - Content-Type
+                  - Accept-Language
+                  - X-Correlation-Id
+                  - Idempotency-Key
+                exposedHeaders:
+                  - X-Correlation-Id
+                allowCredentials: true
+                maxAge: 3600
 
+          routes:
             - id: auth-service
-              uri: lb://auth-service
+              uri: lb://AUTH-SERVICE
               predicates:
                 - Path=/api/auth/**
 
@@ -48,6 +93,13 @@ spring:
               filters:
                 - name: JwtAuthFilter
 
+            - id: payment-service
+              uri: lb://payment-service
+              predicates:
+                - Path=/api/payments/**
+              filters:
+                - name: JwtAuthFilter
+
             - id: analytics-service
               uri: lb://analytics-service
               predicates:
@@ -56,28 +108,13 @@ spring:
                 - name: JwtAuthFilter
 
 
-# Global Cors Config
-
-globalcors:
-  cors-configurations:
-    '[/**]':
-      allowedOrigins: "http://localhost:5373"
-      allowedMethods:
-        - GET
-        - POST
-        - DELETE
-        - PUT
-        - OPTIONS
-        - PATCH
-      allowedHeaders: "*"
-
-
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
-    instance:
-      prefer-ip-address: true
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+    prefer-ip-address: ${EUREKA_PREFER_IP_ADDRESS:false}
 
 
 
@@ -87,11 +124,13 @@ eureka:
 logging:
   level:
     root: INFO
-    com.transport.gateway: DEBUG
-    org.springframework.cloud.gateway: DEBUG
-
+    com.transport.apigateway: INFO
+    org.springframework.web.cors: DEBUG
+    org.springframework.cloud.gateway: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} -%msg%n"
 
 
 
+gateway:
+  secret-key: ${GATEWAY_SHARED_SECRET:local-dev-gateway-secret-transport-2026-keep-private}
